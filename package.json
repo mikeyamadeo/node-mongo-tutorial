@@ -1,0 +1,23 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Simple introduction to creating a REST service and api with node",
+  "main": "api-server.js",
+  "dependencies": {
+    "mongodb": "2.0.46"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeyamadeo/node-api-server-tutorial.git"
+  },
+  "author": "Mikey Murphy <mikeyamadeo@gmail.com> (https://twitter.com/TranscendMikey)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikeyamadeo/node-api-server-tutorial/issues"
+  },
+  "homepage": "https://github.com/mikeyamadeo/node-api-server-tutorial#readme"
+}
