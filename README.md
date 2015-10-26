@@ -53,7 +53,7 @@ var mongodb = require('mongodb');
 
 What this does is instruct node to look for a library named `mongodb`. After looking within node's library of modules and not finding one, it will be smart enough to look in our `node_modules` directory and find it there.
 
-##### 2.
+##### 2. Open a connection
 
 Next we will open a connection to mongodb using our snazzy new javascript library. Feel free to paste the following right underneath where we declare the `mongodb` variable.
 
@@ -93,7 +93,7 @@ Let's put that collection variable we already declared to work. Notice that in t
 ```js
 collection = db.collection('pokemon');
 ```
-
+##### 2. Insert data
 Now we will use that collection object to insert the array `pokemon` like so:
 
 ```js
@@ -142,4 +142,57 @@ MongoClient.connect(dbUrl, function (err, db) {
 If we run `node api-server.js` we should expect a log telling us we have an established connection, and a log informing us we've inserted documents.
 
 ## Retrieving data
+
+Sadly, if we look in our browser, we still only see red. That's because we aren't returning any data when the pathname is `/pokemon`. We want to return this data from the mongo database.
+
+##### 1. Define callback that will receive data from the db
+
+Inside the callback function where we create our server, underneat the `TODO` comment, let's add the following optimistic funciton:
+
+```js
+
+/**
+ * TODO: return pokemon data stored in mongodb
+ */
+
+getPokemonFromDb(function (data) {
+  res.writeHead(200)
+  res.end(JSON.stringify(data))
+})
+
+```
+This will throw an error if we try to run it because we haven't defined a function named `getPokemonFromDb`. It is good practice though to define _how_ you want to use code you haven't written yet. This promotes better quality code.
+
+##### 2. Define `getPokemonFromDb`
+
+Just above the line with `http.createServer` let's place the following:
+
+```js
+function getPokemonFromDb (donOnSuccess) {
+  MongoClient.connect(dbUrl, function (err, db) {
+
+    if (err) {
+      console.log('Unable to connect to the mongoDB server. Error:', err);
+    } else {
+
+      // Get the documents collection
+      var collection = db.collection('pokemon');
+
+      // Get all pokemon from mongodb
+      collection.find({}).toArray(function (err, result) {
+        if (err) {
+          console.log(err);
+        } else if (result.length) {
+          donOnSuccess(result)
+        } else {
+          console.log('No document(s) found with defined "find" criteria!');
+        }
+        // Close connection
+        db.close();
+      });
+    }
+  });
+}
+```
+
 
