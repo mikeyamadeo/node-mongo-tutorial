@@ -1,5 +1,5 @@
 /**
- * This array of pokemon will represent a piece of data in our 'database'
+ * This array of pokemon will be used to store initial data into our mongodb
  */
 var pokemon = [
   {
@@ -30,41 +30,6 @@ var pokemon = [
 ];
 
 // lets require/import the mongodb native drivers.
-var mongodb = require('mongodb');
-
-// We need to work with "MongoClient" interface in order to connect to a mongodb server.
-var MongoClient = mongodb.MongoClient;
-
-// Connection URL. This is where your mongodb server is running.
-var dbUrl = 'mongodb://localhost:27017/pokemon';
-
-var collection
-
-// Use connect method to connect to the Server
-MongoClient.connect(dbUrl, function (err, db) {
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  } else {
-    // HURRAY!! We are connected. :)
-    // console.log('Connection established to', dbUrl);
-
-    // do some work here with the database.
-    collection = db.collection('pokemon');
-
-    collection.insert(pokemon, function (err, result) {
-      if (err) {
-        console.log(err);
-      } else {
-        // console.log('Inserted %d documents into the "pokemon" collection. The documents inserted with "_id" are:', result.length, result);
-      }
-
-      collection.find({})
-      // Close connection
-      db.close();
-    })
-
-  }
-});
 
 var http = require('http');
 var url = require('url');
@@ -72,31 +37,9 @@ var fs = require('fs');
 var ROOT_DIR = "src/";
 var port = 4000;
 
-function getPokemonFromDb (donOnSuccess) {
-  MongoClient.connect(dbUrl, function (err, db) {
-
-    if (err) {
-      console.log('Unable to connect to the mongoDB server. Error:', err);
-    } else {
-
-      // Get the documents collection
-      var collection = db.collection('pokemon');
-
-      // Get all pokemon
-      collection.find({}).toArray(function (err, result) {
-        if (err) {
-          console.log(err);
-        } else if (result.length) {
-          donOnSuccess(result)
-        } else {
-          console.log('No document(s) found with defined "find" criteria!');
-        }
-        // Close connection
-        db.close();
-      });
-    }
-  });
-}
+/**
+ * TODO: put getPokemonFromDb here
+ */
 
 http.createServer(function (req, res) {
   var urlObj = url.parse(req.url, true, false);
@@ -104,8 +47,7 @@ http.createServer(function (req, res) {
   if (urlObj.pathname === '/pokemon') {
 
     /**
-     * TODO: return the array of pokemon above as a string
-     * with an header status of 'ok'
+     * TODO: return pokemon data stored in mongodb
      */
 
     getPokemonFromDb(function (data) {
