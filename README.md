@@ -195,4 +195,15 @@ function getPokemonFromDb (donOnSuccess) {
 }
 ```
 
+Now if we run our server (`node api-server.js`) and view the results in the browser, we should expect to see a blue screen with our pokemon gifs running in the view. 
+
+NOTE: If you have run `api-server.js` multiple times since adding the code to insert data into mongo, there will be duplicates of the pokemon data. This demonstrates that the data is persisting between server runs. Because we are not removing data, we add our array of pokemon to the previous inserts each time we execute the code. This will result in more and more pokemon showing up every time the `api-server.js` is run.
+
+For additional learning, you can try to clear the pokemon collection before inserting each time. The method for this is `.remove` and would look similar to `.insert`
+
+#### Troubleshooting
+If you are having trouble you can see a working version of the code by switching branches on the repository using the terminal:
+
+`git checkout answer`
+
 
