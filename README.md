@@ -45,7 +45,7 @@ making sure you are in the root directory of the application, execute the follow
 
 What should of happened is a `node_modules` directory should have showed up and inside you should see a `mongodb` directory.
 
-Now, in our `api-server.js` file, right below the comment that reads `var mongodb = require('mongodb');`, let's include the following line of code:
+Now, in our `api-server.js` file, replacing the comment that reads `TODO: require/import mongo drivers`, let's include the following line of code:
 
 ```js
 var mongodb = require('mongodb');
@@ -104,7 +104,7 @@ collection.insert(pokemon, function (err, result) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Inserted %d documents into the "pokemon" collection. The documents inserted with "_id" are:', result.length, result);
+    console.log('Inserted documents into the "pokemon" collection. The documents inserted with "_id" are:', result.length, result);
   }
   
   // Close connection
