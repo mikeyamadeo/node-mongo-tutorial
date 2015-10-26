@@ -29,7 +29,9 @@ var pokemon = [
   }
 ];
 
-// lets require/import the mongodb native drivers.
+/**
+ * TODO: require/import mongo drivers
+ */
 
 var http = require('http');
 var url = require('url');
